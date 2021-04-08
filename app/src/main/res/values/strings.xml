@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HowlinkPart3</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="entities">Entities</string>
+    <string name="my_profile">My Profile</string>
+
+    <string name="channel">Channel</string>
+    <string name="deals">Deals</string>
+    <string name="search_for_shops_products">Search for shops,products</string>
+    <string name="market">Market</string>
+</resources>
