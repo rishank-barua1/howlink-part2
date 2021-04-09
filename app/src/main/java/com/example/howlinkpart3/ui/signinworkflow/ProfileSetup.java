@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -34,6 +35,7 @@ public class ProfileSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_setup_activity);
         profileButton = findViewById(R.id.profile_image_setter);
+        SharedPreferences preferences = getSharedPreferences("PROFILE_PICTURE",MODE_PRIVATE);
     }
 
     public void openCamera(View view) {
@@ -105,6 +107,10 @@ public class ProfileSetup extends AppCompatActivity {
         {
             Bitmap bitmap= (Bitmap)data.getExtras().get("data");
             profileButton.setImageBitmap(bitmap);
+            SharedPreferences preferences = getSharedPreferences("PROFILE_PICTURE",MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("ProfilePictureSet",true);
+            editor.put
 
         }
 
