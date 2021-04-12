@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="6dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/post"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="60dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/Profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            tools:src = "@tools:sample/avatars"
+            android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/profile_name"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="6dp"
+        android:hint = "Name"
+        android:textSize="16sp"
+        android:layout_marginLeft="12dp"
+        app:layout_constraintLeft_toRightOf="@id/profile_icon"
+        android:textColor="@color/black"
+        />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/post"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_name"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        android:backgroundTint="#fff"
+        />
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/post"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:backgroundTint="#fff"
+            android:src="@drawable/like" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/share_button"
+            android:src="@drawable/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
+            android:layout_toLeftOf="@id/bookmark_button"
+            />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/comment_button"
+            android:layout_width="wrap_content"
+            android:backgroundTint="#fff"
+            android:src="@drawable/comment"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/like_button"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/bookmark_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bookmark"
+            />
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bottom_bar_post"
+        android:layout_marginTop="16dp"
+        android:hint = "Caption"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/black"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

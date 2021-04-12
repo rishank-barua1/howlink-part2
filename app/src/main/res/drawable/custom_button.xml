@@ -8,7 +8,7 @@
         android:radius="60dp"
         android:topLeftRadius="30dp"
         android:topRightRadius="30dp" />
-    <solid android:color="#ccccff"/>
+    <solid android:color="#fff"/>
     <stroke android:width="2dp" android:color="#000" />
     <padding
         android:bottom="0dp"

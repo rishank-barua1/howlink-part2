@@ -1,4 +1,4 @@
-package com.example.howlinkpart3.ui.market;
+package com.example.howlinkpart3.ui.channel;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,26 +14,24 @@ import android.view.ViewGroup;
 
 import com.example.howlinkpart3.R;
 
-public class Market extends Fragment {
+public class Channel extends Fragment {
 
-    private MarketViewModel mViewModel;
+    private ChannelViewModel mViewModel;
 
-    public static Market newInstance() {
-        return new Market();
+    public static Channel newInstance() {
+        return new Channel();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_market, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.channel_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ChannelViewModel.class);
         // TODO: Use the ViewModel
     }
 

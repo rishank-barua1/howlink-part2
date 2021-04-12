@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.howlinkpart3.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_deals"
+        android:name="com.example.howlinkpart3.ui.Deals.Deals"
+        android:label ="Deals"
+        tools:layout="@layout/fragment_deals" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.howlinkpart3.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_channel"
+        android:name="com.example.howlinkpart3.ui.channel.Channel"
+        android:label ="Channel"
+        tools:layout="@layout/channel_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_market"
+        android:name="com.example.howlinkpart3.ui.market.Market"
+        android:label ="Market"
+        tools:layout="@layout/fragment_market" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.howlinkpart3.ui.profile.Profile"
+        android:label ="Profile"
+        tools:layout="@layout/profile_fragment" />
 </navigation>

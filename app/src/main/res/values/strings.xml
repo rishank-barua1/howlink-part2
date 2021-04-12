@@ -10,4 +10,13 @@
     <string name="deals">Deals</string>
     <string name="search_for_shops_products">Search for shops,products</string>
     <string name="market">Market</string>
+    <string name="transition_string">hello</string>
+
+    <string-array name="gender_spinner">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Transgender</item>
+        <item>Prefer Not Say</item>
+    </string-array>
+
 </resources>

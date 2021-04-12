@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".ui.profile.EditProfile">
+    <LinearLayout
+        android:layout_gravity="top|center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/edit_discard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:backgroundTint="#fff"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/edit_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_check_24"
+                android:backgroundTint="#fff"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/edit_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit background image"
+            app:layout_constraintTop_toBottomOf="@id/edit_discard"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="16sp"
+            android:layout_marginLeft="18dp"
+            android:textColor="@color/black"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/background"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_background"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+        <TextView
+            android:id="@+id/change_background_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change background picture"
+            android:layout_marginLeft="18dp"
+            android:textSize="16sp"
+            android:clickable="true"
+            android:textColor="#0000ff"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/background"/>
+
+        <TextView
+            android:id="@+id/edit_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit profile picture"
+            android:layout_marginLeft="18dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/change_background_picture"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="12dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_picture"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/profile_picture"
+            app:cardCornerRadius="40dp"
+            android:layout_centerHorizontal="true">
+            <ImageView
+                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:id="@+id/imageView1"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/change_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change background picture"
+            android:layout_marginLeft="18dp"
+            android:textSize="16sp"
+            android:clickable="true"
+            android:textColor="#0000ff"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_picture"/>
+
+        <TextView
+            android:id="@+id/edit_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit username"
+            android:layout_marginLeft="18dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/change_profile_picture"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_username"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:contentDescription="Username"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:boxStrokeColor="@color/black"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/username_edit1"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/edit_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit bio"
+            android:layout_marginLeft="18dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/username_edit"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bio_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_bio"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:contentDescription="Bio"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:boxStrokeColor="@color/black"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/bio_edit1"
+                android:layout_height="wrap_content"
+                android:hint="Bio"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/create_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "Create your own channel, shop and entity"
+            app:layout_constraintTop_toBottomOf= "@id/bio_edit1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="#fff"
+            android:textColor="#0000ff"
+            android:layout_marginLeft="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/personal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text= "Personal Info and Settings"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="#fff"
+            android:textColor="#0000ff"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
+
+
+</ScrollView>

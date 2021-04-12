@@ -1,4 +1,4 @@
-package com.example.howlinkpart3.ui.dashboard;
+package com.example.howlinkpart3.ui.Deals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.howlinkpart3.R;
 
-public class DashboardFragment extends Fragment {
+public class Deals extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private DealsViewModel dealsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        dealsViewModel =
+                new ViewModelProvider(this).get(DealsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_deals, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        dealsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
