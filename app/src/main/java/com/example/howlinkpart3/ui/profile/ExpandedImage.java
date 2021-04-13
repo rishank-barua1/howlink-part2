@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.howlinkpart3.R;
+
+import java.io.File;
 
 public class ExpandedImage extends AppCompatActivity {
     private ImageView view;
@@ -20,6 +23,23 @@ public class ExpandedImage extends AppCompatActivity {
 
         Intent intent = getIntent();
         String path = intent.getStringExtra("Path to Profile Picture");
-        Glide.with(ExpandedImage.this).load(path).into(view);
+        loadImageFromStorage(path,view);
+    }
+
+    protected void loadImageFromStorage(String path,ImageView iv)
+    {
+
+        try {
+            File f = new File(path, "profile.jpg");
+            Glide.with(getApplicationContext())
+                    .load(f)// Uri of the picture
+                    .into(iv);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

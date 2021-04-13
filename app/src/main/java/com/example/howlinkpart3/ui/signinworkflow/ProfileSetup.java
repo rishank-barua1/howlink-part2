@@ -11,6 +11,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.howlinkpart3.MainActivity;
@@ -47,16 +49,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 
 public class ProfileSetup extends AppCompatActivity {
+    public static final String PROFILE_PIC = "Path to profile picture";
     private ImageButton profileButton;
     private TextInputEditText BIO,PINCODE;
     private Button nextButton;
     public static final String PROFILE_TAG = "Profile Set";
-    private Animator currentAnimator;
-    private int shortAnimationDuration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +78,8 @@ public class ProfileSetup extends AppCompatActivity {
         {
             PINCODE.setText(pincode);
         }
-        String imagePath = preferences.getString("Path to picture","");
-        if(imagePath.equalsIgnoreCase(""))
-        {
-            Glide.with(this).load(imagePath).into(profileButton);
-        }
+        if(preferences.getBoolean("isProfilePictureSelected",false))
+            loadImageFromStorage(preferences.getString(PROFILE_PIC,""),profileButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +175,12 @@ public class ProfileSetup extends AppCompatActivity {
         {
             Bitmap realImage = (Bitmap)data.getExtras().get("data");
             profileButton.setImageBitmap(realImage);
-
+            String pathToProfile = saveToInternalStorage(realImage);
+            SharedPreferences preferences = getSharedPreferences(PROFILE_TAG,MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isProfilePictureSelected",true);
+            editor.putString(PROFILE_PIC,pathToProfile);
+            editor.commit();
 
 
         }
@@ -184,14 +188,18 @@ public class ProfileSetup extends AppCompatActivity {
         if(requestCode == 103 && resultCode == RESULT_OK)
         {
             Uri filepath = data.getData();
-            String path = Profile.getPathFromUri(ProfileSetup.this,filepath);
             try
             {
-                Glide.with(ProfileSetup.this).load(path).into(profileButton);
+                InputStream inputStream = getContentResolver().openInputStream(filepath);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                Glide.with(getApplicationContext()).load(filepath).transform(new CircleCrop()).into(profileButton);
+                String pathToProfile= saveToInternalStorage(bitmap);
                 SharedPreferences preferences = getSharedPreferences(PROFILE_TAG,MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("Path to picture",path);
-                editor.apply();editor.commit();
+                editor.putBoolean("isProfilePictureSelected",true);
+                editor.putString(PROFILE_PIC,pathToProfile);
+                editor.commit();
+
 
             }
             catch (Exception e)
@@ -199,7 +207,50 @@ public class ProfileSetup extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    protected String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
+
+    protected void loadImageFromStorage(String path,ImageView iv)
+    {
+
+        try {
+            File f = new File(path, "profile.jpg");
+            Glide.with(getApplicationContext())
+                    .load(f)
+                    .transform(new CircleCrop())// Uri of the picture
+                    .into(profileButton);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }
 

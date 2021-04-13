@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HowlinkPart3">
-        <activity android:name=".ui.profile.PostActivity"></activity>
+        <activity android:name=".ui.market.MarketList"></activity>
+        <activity android:name=".ui.profile.PostActivity" />
         <activity android:name=".ui.profile.EmailChange" />
         <activity android:name=".ui.profile.PhoneChange" />
         <activity android:name=".ui.profile.PersonalSetting" />

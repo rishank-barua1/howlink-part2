@@ -26,7 +26,9 @@
         android:layout_above="@id/nav_view"
         app:navGraph="@navigation/mobile_navigation">
 
+
     </androidx.fragment.app.FragmentContainerView>
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -74,6 +76,12 @@
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+
 
 
 

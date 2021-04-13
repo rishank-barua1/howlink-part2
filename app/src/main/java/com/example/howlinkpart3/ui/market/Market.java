@@ -1,5 +1,6 @@
 package com.example.howlinkpart3.ui.market;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +17,14 @@ import android.view.ViewGroup;
 
 import com.example.howlinkpart3.R;
 
+import java.util.ArrayList;
+
 public class Market extends Fragment {
 
     private MarketViewModel mViewModel;
-
+    private RecyclerView mRecycler;
+    private MarketAdapter mAdapter;
+    private ArrayList<MarketObj> data1 = new ArrayList<>();
     public static Market newInstance() {
         return new Market();
     }
@@ -26,6 +33,12 @@ public class Market extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_market, container, false);
+        mRecycler = view.findViewById(R.id.recyler1);
+       data1 = mViewModel.getData();
+        mAdapter = new MarketAdapter(getContext(),data1);
+        mRecycler.setAdapter(mAdapter);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         return view;
     }
@@ -34,7 +47,21 @@ public class Market extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
+
         // TODO: Use the ViewModel
     }
 
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
 }

@@ -33,7 +33,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/back_arrow"
-                android:text="@string/market"
+                android:hint="Category"
 
                 android:textColor="@color/black"
                 android:textSize="24sp"
@@ -93,8 +93,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/market_viewholder"
-         />
+
+        />
 
 
 
