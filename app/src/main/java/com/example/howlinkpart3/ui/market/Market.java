@@ -24,7 +24,7 @@ public class Market extends Fragment {
     private MarketViewModel mViewModel;
     private RecyclerView mRecycler;
     private MarketAdapter mAdapter;
-    private ArrayList<MarketObj> data1 = new ArrayList<>();
+    private ArrayList<MarketObj> data1 ;
     public static Market newInstance() {
         return new Market();
     }
@@ -34,10 +34,7 @@ public class Market extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_market, container, false);
         mRecycler = view.findViewById(R.id.recyler1);
-       data1 = mViewModel.getData();
-        mAdapter = new MarketAdapter(getContext(),data1);
-        mRecycler.setAdapter(mAdapter);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
 
         return view;
@@ -47,7 +44,11 @@ public class Market extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
-
+        data1 = new ArrayList<>();
+        data1 = mViewModel.getData();
+        mAdapter = new MarketAdapter(getContext(),data1);
+        mRecycler.setAdapter(mAdapter);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         // TODO: Use the ViewModel
     }
 

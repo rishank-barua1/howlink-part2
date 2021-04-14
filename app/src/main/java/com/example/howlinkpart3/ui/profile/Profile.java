@@ -14,6 +14,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +42,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.howlinkpart3.R;
 import com.example.howlinkpart3.ui.signinworkflow.ProfileSetup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,7 +54,8 @@ import java.io.InputStream;
 public class Profile extends Fragment {
 
     private ProfileViewModel mViewModel;
-    private ImageButton backgroundPicture,profilePicture;
+    private ImageButton backgroundPicture;
+    private ShapeableImageView profilePicture;
     private TextView Name,Bio;
     private FloatingActionButton editProfile;
     private ImageView expandedImage;
@@ -73,9 +80,15 @@ public class Profile extends Fragment {
         {
             Bio.setText(bio);
         }
-        if(preferences.getBoolean("isProfilePictureSet",false))
+        if(preferences.getBoolean("isProfilePictureSelected",false))
         {
-            loadImageFromStorage(preferences.getString(ProfileSetup.PROFILE_PIC,""),profilePicture);
+            Uri imageUri = Uri.parse(preferences.getString(ProfileSetup.PROFILE_PIC,""));
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                profilePicture.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +116,7 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(),ExpandedImage.class);
-               i.putExtra("Path to Profile Picture",preferences.getString(ProfileSetup.PROFILE_PIC,""));
+                i.putExtra("Path to Profile Picture",preferences.getString(ProfileSetup.PROFILE_PIC,""));
                 startActivity(i);
             }
         });
@@ -210,5 +223,27 @@ public class Profile extends Fragment {
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
     }
 }

@@ -83,27 +83,18 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:src="@tools:sample/backgrounds/scenic" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/view2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom|center"
-        android:elevation="12dp"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_picture"
         app:layout_constraintBottom_toTopOf="@id/floatingActionButton2"
-        app:cardCornerRadius="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-
-        <ImageButton
-            android:id="@+id/profile_picture"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars"
-             />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintRight_toRightOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/black"
+        tools:src="@tools:sample/avatars"
+        android:layout_height="100dp"
+        android:layout_width="100dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
@@ -127,7 +118,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view2" />
+        app:layout_constraintTop_toBottomOf="@id/profile_picture" />
 
     <TextView
         android:id="@+id/profile_bio"

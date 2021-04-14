@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.howlinkpart3.R;
+import com.example.howlinkpart3.ui.signinworkflow.ProfileSetup;
 
 import java.io.File;
 
@@ -23,7 +24,8 @@ public class ExpandedImage extends AppCompatActivity {
 
         Intent intent = getIntent();
         String path = intent.getStringExtra("Path to Profile Picture");
-        loadImageFromStorage(path,view);
+        Uri uri = Uri.parse(path);
+        Glide.with(getApplicationContext()).load(uri).into(view);
     }
 
     protected void loadImageFromStorage(String path,ImageView iv)

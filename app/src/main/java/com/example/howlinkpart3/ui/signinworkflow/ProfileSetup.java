@@ -42,6 +42,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -79,7 +81,7 @@ public class ProfileSetup extends AppCompatActivity {
             PINCODE.setText(pincode);
         }
         if(preferences.getBoolean("isProfilePictureSelected",false))
-            loadImageFromStorage(preferences.getString(PROFILE_PIC,""),profileButton);
+            Glide.with(getApplicationContext()).load(preferences.getString(PROFILE_PIC,"")).transform(new CircleCrop()).into(profileButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +107,12 @@ public class ProfileSetup extends AppCompatActivity {
     }
 
     public void openCamera(View view) {
-        final CharSequence[]  choices= {"Use a camera","From Gallery"};
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
+
+
+       /* final CharSequence[]  choices= {"Use a camera","From Gallery"};
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(ProfileSetup.this);
         //alt_bld.setIcon(R.drawable.icon);
         alt_bld.setTitle("Select a picture");
@@ -164,47 +171,25 @@ public class ProfileSetup extends AppCompatActivity {
             }
         });
         AlertDialog alert = alt_bld.create();
-        alert.show();
+        alert.show();*/
 
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == RESULT_OK && requestCode == 102)
-        {
-            Bitmap realImage = (Bitmap)data.getExtras().get("data");
-            profileButton.setImageBitmap(realImage);
-            String pathToProfile = saveToInternalStorage(realImage);
-            SharedPreferences preferences = getSharedPreferences(PROFILE_TAG,MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("isProfilePictureSelected",true);
-            editor.putString(PROFILE_PIC,pathToProfile);
-            editor.commit();
-
-
-        }
-
-        if(requestCode == 103 && resultCode == RESULT_OK)
-        {
-            Uri filepath = data.getData();
-            try
-            {
-                InputStream inputStream = getContentResolver().openInputStream(filepath);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                Glide.with(getApplicationContext()).load(filepath).transform(new CircleCrop()).into(profileButton);
-                String pathToProfile= saveToInternalStorage(bitmap);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
                 SharedPreferences preferences = getSharedPreferences(PROFILE_TAG,MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(PROFILE_PIC,String.valueOf(resultUri));
                 editor.putBoolean("isProfilePictureSelected",true);
-                editor.putString(PROFILE_PIC,pathToProfile);
                 editor.commit();
-
-
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
+                Glide.with(getApplicationContext()).load(resultUri).transform(new CircleCrop()).into(profileButton);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
             }
         }
 
