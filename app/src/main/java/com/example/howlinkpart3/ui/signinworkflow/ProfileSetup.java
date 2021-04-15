@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.usr;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -99,6 +101,13 @@ public class ProfileSetup extends AppCompatActivity {
                     editor.putString("Pincode",pincode);
                     editor.apply();
                     editor.commit();
+                    usr user = usr.builder().userName("").emailId("").phoneNum("").passsword("").numPost(0).follower(0).following(0).profilePic("").coverPic("").bio(bio).numChannel(0).numDeals(0).pincode(pincode).tehsil("").district("").state("")
+                            .build();
+
+                        Amplify.DataStore.save(user,
+                            saved -> Log.i("MyAmplifyApp", "Saved a post."),
+                            failure -> Log.e("MyAmplifyApp", "Save failed.", failure)
+                    );
                     startActivity(new Intent(ProfileSetup.this, MainActivity.class));
 
                 }
