@@ -1,0 +1,53 @@
+type Query {
+	post(id: ID!): post
+}
+
+type comment @model
+@key(name: "bycomm",fields: ["post_id","comm_id"]) {
+	id: ID!
+	post_id: ID!
+	comm_id: ID!
+	message: String!
+	post: post
+		@connection(fields: ["post_id"])
+}
+
+type post @model
+@key(name: "byPost",fields: ["user_id"]) {
+	id: ID!
+	user_id: ID!
+	content_type: String!
+	caption: String!
+	views: Int!
+	post: usr
+		@connection(fields: ["user_id"])
+	comment_conn: [comment]
+		@connection(keyName: "bycomm",fields: ["id"])
+}
+
+schema {
+	query: Query
+}
+
+type usr @model {
+	id: ID!
+	user_name: String!
+	date: AWSTimestamp
+	email_id: String!
+	phone_num: AWSPhone!
+	passsword: String!
+	num_post: Int!
+	follower: Int!
+	following: Int!
+	profile_pic: AWSURL!
+	cover_pic: AWSURL!
+	bio: String!
+	num_channel: Int!
+	num_deals: Int!
+	pincode:Int!
+	tehsil:String!
+	District:String!
+	State:String!
+	posts: [post]
+		@connection(keyName: "byPost",fields: ["id"])
+}

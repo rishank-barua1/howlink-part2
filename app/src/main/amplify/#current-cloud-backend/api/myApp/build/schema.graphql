@@ -1,0 +1,366 @@
+type Query {
+  post(id: ID!): post
+  getComment(id: ID!): comment
+  listComments(filter: ModelcommentFilterInput, limit: Int, nextToken: String): ModelcommentConnection
+  getPost(id: ID!): post
+  listPosts(filter: ModelpostFilterInput, limit: Int, nextToken: String): ModelpostConnection
+  getUsr(id: ID!): usr
+  listUsrs(filter: ModelusrFilterInput, limit: Int, nextToken: String): ModelusrConnection
+}
+
+type comment {
+  id: ID!
+  post_id: ID!
+  comm_id: ID!
+  message: String!
+  post: post
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type post {
+  id: ID!
+  user_id: ID!
+  content_type: String!
+  caption: String!
+  views: Int!
+  post: usr
+  comment_conn(comm_id: ModelIDKeyConditionInput, filter: ModelcommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelcommentConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type usr {
+  id: ID!
+  user_name: String!
+  date: AWSTimestamp
+  email_id: String!
+  phone_num: AWSPhone!
+  passsword: String!
+  num_post: Int!
+  follower: Int!
+  following: Int!
+  profile_pic: AWSURL!
+  cover_pic: AWSURL!
+  bio: String!
+  num_channel: Int!
+  num_deals: Int!
+  pincode: Int!
+  tehsil: String!
+  District: String!
+  State: String!
+  posts(filter: ModelpostFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelpostConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelcommentConnection {
+  items: [comment]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelcommentFilterInput {
+  id: ModelIDInput
+  post_id: ModelIDInput
+  comm_id: ModelIDInput
+  message: ModelStringInput
+  and: [ModelcommentFilterInput]
+  or: [ModelcommentFilterInput]
+  not: ModelcommentFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input CreateCommentInput {
+  id: ID
+  post_id: ID!
+  comm_id: ID!
+  message: String!
+}
+
+input UpdateCommentInput {
+  id: ID!
+  post_id: ID
+  comm_id: ID
+  message: String
+}
+
+input DeleteCommentInput {
+  id: ID
+}
+
+type Mutation {
+  createComment(input: CreateCommentInput!, condition: ModelcommentConditionInput): comment
+  updateComment(input: UpdateCommentInput!, condition: ModelcommentConditionInput): comment
+  deleteComment(input: DeleteCommentInput!, condition: ModelcommentConditionInput): comment
+  createPost(input: CreatePostInput!, condition: ModelpostConditionInput): post
+  updatePost(input: UpdatePostInput!, condition: ModelpostConditionInput): post
+  deletePost(input: DeletePostInput!, condition: ModelpostConditionInput): post
+  createUsr(input: CreateUsrInput!, condition: ModelusrConditionInput): usr
+  updateUsr(input: UpdateUsrInput!, condition: ModelusrConditionInput): usr
+  deleteUsr(input: DeleteUsrInput!, condition: ModelusrConditionInput): usr
+}
+
+input ModelcommentConditionInput {
+  post_id: ModelIDInput
+  comm_id: ModelIDInput
+  message: ModelStringInput
+  and: [ModelcommentConditionInput]
+  or: [ModelcommentConditionInput]
+  not: ModelcommentConditionInput
+}
+
+type Subscription {
+  onCreateComment: comment @aws_subscribe(mutations: ["createComment"])
+  onUpdateComment: comment @aws_subscribe(mutations: ["updateComment"])
+  onDeleteComment: comment @aws_subscribe(mutations: ["deleteComment"])
+  onCreatePost: post @aws_subscribe(mutations: ["createPost"])
+  onUpdatePost: post @aws_subscribe(mutations: ["updatePost"])
+  onDeletePost: post @aws_subscribe(mutations: ["deletePost"])
+  onCreateUsr: usr @aws_subscribe(mutations: ["createUsr"])
+  onUpdateUsr: usr @aws_subscribe(mutations: ["updateUsr"])
+  onDeleteUsr: usr @aws_subscribe(mutations: ["deleteUsr"])
+}
+
+type ModelpostConnection {
+  items: [post]
+  nextToken: String
+}
+
+input ModelpostFilterInput {
+  id: ModelIDInput
+  user_id: ModelIDInput
+  content_type: ModelStringInput
+  caption: ModelStringInput
+  views: ModelIntInput
+  and: [ModelpostFilterInput]
+  or: [ModelpostFilterInput]
+  not: ModelpostFilterInput
+}
+
+input CreatePostInput {
+  id: ID
+  user_id: ID!
+  content_type: String!
+  caption: String!
+  views: Int!
+}
+
+input UpdatePostInput {
+  id: ID!
+  user_id: ID
+  content_type: String
+  caption: String
+  views: Int
+}
+
+input DeletePostInput {
+  id: ID
+}
+
+input ModelpostConditionInput {
+  user_id: ModelIDInput
+  content_type: ModelStringInput
+  caption: ModelStringInput
+  views: ModelIntInput
+  and: [ModelpostConditionInput]
+  or: [ModelpostConditionInput]
+  not: ModelpostConditionInput
+}
+
+type ModelusrConnection {
+  items: [usr]
+  nextToken: String
+}
+
+input ModelusrFilterInput {
+  id: ModelIDInput
+  user_name: ModelStringInput
+  date: ModelIntInput
+  email_id: ModelStringInput
+  phone_num: ModelStringInput
+  passsword: ModelStringInput
+  num_post: ModelIntInput
+  follower: ModelIntInput
+  following: ModelIntInput
+  profile_pic: ModelStringInput
+  cover_pic: ModelStringInput
+  bio: ModelStringInput
+  num_channel: ModelIntInput
+  num_deals: ModelIntInput
+  pincode: ModelIntInput
+  tehsil: ModelStringInput
+  District: ModelStringInput
+  State: ModelStringInput
+  and: [ModelusrFilterInput]
+  or: [ModelusrFilterInput]
+  not: ModelusrFilterInput
+}
+
+input CreateUsrInput {
+  id: ID
+  user_name: String!
+  date: AWSTimestamp
+  email_id: String!
+  phone_num: AWSPhone!
+  passsword: String!
+  num_post: Int!
+  follower: Int!
+  following: Int!
+  profile_pic: AWSURL!
+  cover_pic: AWSURL!
+  bio: String!
+  num_channel: Int!
+  num_deals: Int!
+  pincode: Int!
+  tehsil: String!
+  District: String!
+  State: String!
+}
+
+input UpdateUsrInput {
+  id: ID!
+  user_name: String
+  date: AWSTimestamp
+  email_id: String
+  phone_num: AWSPhone
+  passsword: String
+  num_post: Int
+  follower: Int
+  following: Int
+  profile_pic: AWSURL
+  cover_pic: AWSURL
+  bio: String
+  num_channel: Int
+  num_deals: Int
+  pincode: Int
+  tehsil: String
+  District: String
+  State: String
+}
+
+input DeleteUsrInput {
+  id: ID
+}
+
+input ModelusrConditionInput {
+  user_name: ModelStringInput
+  date: ModelIntInput
+  email_id: ModelStringInput
+  phone_num: ModelStringInput
+  passsword: ModelStringInput
+  num_post: ModelIntInput
+  follower: ModelIntInput
+  following: ModelIntInput
+  profile_pic: ModelStringInput
+  cover_pic: ModelStringInput
+  bio: ModelStringInput
+  num_channel: ModelIntInput
+  num_deals: ModelIntInput
+  pincode: ModelIntInput
+  tehsil: ModelStringInput
+  District: ModelStringInput
+  State: ModelStringInput
+  and: [ModelusrConditionInput]
+  or: [ModelusrConditionInput]
+  not: ModelusrConditionInput
+}
+
+input ModelIDKeyConditionInput {
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  between: [ID]
+  beginsWith: ID
+}
