@@ -39,6 +39,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
+import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
 import com.example.howlinkpart3.R;
 import com.example.howlinkpart3.ui.signinworkflow.ProfileSetup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,6 +59,7 @@ public class Profile extends Fragment {
     private ImageButton backgroundPicture;
     private ShapeableImageView profilePicture;
     private TextView Name,Bio;
+    public static final String POST_PIC = "URI FOR POST_IMAGE";
     private FloatingActionButton editProfile;
     private ImageView expandedImage;
     private AppCompatButton postButton;
@@ -95,7 +98,7 @@ public class Profile extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK);
                 i.setType("image/*");
-                startActivityForResult(Intent.createChooser(i,"Browse for image"),103);
+                startActivityForResult(Intent.createChooser(i,"Browse for image"),45);
             }
         });
 
@@ -154,15 +157,21 @@ public class Profile extends Fragment {
 
         }
 
-        if(resultCode==Activity.RESULT_OK && requestCode ==103)
+        if(resultCode == Activity.RESULT_OK && requestCode==45)
         {
             Uri filepath = data.getData();
+            Intent dsPhotoEditorIntent = new Intent(getContext(), DsPhotoEditorActivity.class);
+            dsPhotoEditorIntent.setData(filepath);
+            dsPhotoEditorIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "PostsHowlink");
+            int[] toolsToHide = {DsPhotoEditorActivity.TOOL_ORIENTATION};
+            dsPhotoEditorIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, toolsToHide);
+            startActivityForResult(dsPhotoEditorIntent, 200);
 
-
-            Intent intent = new Intent(getContext(), PostActivity.class);
-            intent.putExtra("picture",String.valueOf(filepath));
+        }
+        if (resultCode == Activity.RESULT_OK && requestCode==200) {
+            Intent intent = new Intent(getContext(),PostActivity.class);
+            intent.setData(data.getData());
             startActivity(intent);
-
 
 
         }
