@@ -2,18 +2,30 @@ plugins {
     id 'com.android.application'
 }
 
+
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
     defaultConfig {
-        applicationId "com.example.howlinkpart3"
+       applicationId "com.example.howlinkpart3"
+
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        renderscriptTargetApi 21
+
+        renderscriptSupportModeEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures{
+        viewBinding true
     }
 
     buildTypes {
@@ -48,8 +60,16 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.6.0'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     // If you want to use the GPU Filters
     implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
+    // Add the Kotlin plugin
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name:'ds-photo-editor-sdk-v10', ext:'aar')
+    // SDK related dependencies
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.android.volley:volley:1.2.0'
 
 }
